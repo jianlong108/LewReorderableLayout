@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+//允许拖动排序的拖动方向
+typedef NS_ENUM(NSInteger, DragDirectionType)
+{
+    DragDirectionTypeAll = 0,       //不限制拖动方向
+    DragDirectionTypeHorizontal =1, //只能横向拖动
+    DragDirectionTypeVertical =2    //只能纵向拖动
+};
 
 @protocol LewReorderableLayoutDataSource <UICollectionViewDataSource>
 
@@ -58,5 +65,8 @@
 @property (nonatomic, weak)id<LewReorderableLayoutDataSource> dataSource;
 @property (nonatomic, strong)UILongPressGestureRecognizer *longPress;
 @property (nonatomic, strong)UIPanGestureRecognizer *panGesture;
+
+//支持拖动的方向
+@property (nonatomic, assign)DragDirectionType dragDirection;
 
 @end

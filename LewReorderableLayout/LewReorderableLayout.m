@@ -357,8 +357,38 @@ typedef NS_ENUM(NSUInteger, LewScrollDirction) {
         switch (pan.state) {
             case UIGestureRecognizerStateChanged:{
                 CGPoint center = _cellFakeView.center;
-                center.x = self.fakeCellCenter.x + self.panTranslation.x;
-                center.y = self.fakeCellCenter.y + self.panTranslation.y;
+                switch (self.dragDirection)
+                {
+                    case DragDirectionTypeAll:
+                    {
+                        //不限制拖动方向
+                        center.x = self.fakeCellCenter.x + self.panTranslation.x;
+                        center.y = self.fakeCellCenter.y + self.panTranslation.y;
+                    }
+                        break;
+                    case DragDirectionTypeHorizontal:
+                    {
+                        //只能横向拖动
+                        center.x = self.fakeCellCenter.x + self.panTranslation.x;
+                        center.y = self.fakeCellCenter.y;
+                    }
+                        break;
+                    case DragDirectionTypeVertical:
+                    {
+                        //只能纵向拖动
+                        center.x = self.fakeCellCenter.x;
+                        center.y = self.fakeCellCenter.y + self.panTranslation.y;
+                    }
+                        break;
+                    default:
+                    {
+                        //默认不限制拖动方向
+                        center.x = self.fakeCellCenter.x + self.panTranslation.x;
+                        center.y = self.fakeCellCenter.y + self.panTranslation.y;
+                    }
+                        break;
+                }
+
                 _cellFakeView.center = center;
                 
                 [self beginScrollIfNeeded];
